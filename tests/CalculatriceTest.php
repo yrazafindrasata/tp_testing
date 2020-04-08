@@ -13,4 +13,19 @@ class CalculatriceTest extends TestCase
         $foo = Calculatrice::addition($this->a, $this->b);
         $this -> assertEquals($this->a+$this->b,$foo);
     }
+
+    public function testMinus(){
+        $foo = Calculatrice::minus($this->a, $this->b);
+        $this -> assertEquals($this->a-$this->b,$foo);
+    }
+
+    public function testMultiply(){
+        $foo = Calculatrice::multiply($this->a, $this->b);
+        $this -> assertEquals($this->a*$this->b,$foo);
+    }
+
+    public function testDivision(){
+        $foo = Calculatrice::division($this->a, $this->b);
+        $this -> assertEquals($this->a/$this->b,$foo);
+    }
 }
