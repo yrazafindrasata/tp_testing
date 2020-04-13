@@ -66,7 +66,7 @@ class ContactController extends AbstractController
         $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && $contact->validPhoneNumber()) {
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('contact_index');
