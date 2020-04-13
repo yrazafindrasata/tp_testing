@@ -46,13 +46,4 @@ class ContactTest extends WebTestCase
         ]);
         $this->assertSelectorTextContains('ul li','This value should be of type digit.');
     }
-
-    public function  testDelete()
-    {
-        $client = static::createClient();
-        $client->followRedirects(true);
-        $crawler = $client->request('DELETE','/contact/8');
-        $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1','Contact index');
-    }
 }
