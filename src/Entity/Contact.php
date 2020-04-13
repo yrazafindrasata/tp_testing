@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ContactRepository")
@@ -17,22 +18,35 @@ class Contact
     private $id;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\NotNull()
      * @ORM\Column(type="string", length=255)
      */
     private $firstname;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\NotNull()
      * @ORM\Column(type="string", length=255)
      */
     private $lastname;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\NotNull()
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email.")
      * @ORM\Column(type="string", length=255)
      */
     private $email;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @Assert\Type(type={"digit"})
+     * @Assert\Length(
+     *      min = 10,
+     *      minMessage = "Your phone number must be at least {{ limit }} characters long"
+     * )
+     * @ORM\Column(type="string", length=10, nullable=true)
      */
     private $phone_number;
 
@@ -91,24 +105,13 @@ class Contact
         return $this;
     }
 
-    public function isValid(): bool
+    public function validPhoneNumber(): bool
     {
-        if(empty($this->firstname)){
-            return false;
-        }
-        if(empty($this->lastname)){
-            return false;
-        }
-        if(empty($this->lastname)){
-            return false;
-        }
-        if(empty($this->email) || !filter_var($this->email, FILTER_VALIDATE_EMAIL)){
-            return false;
-        }
-        if(!empty($this->phone_number) && (!preg_match("/\d+$/", $this->phone_number)||
-                strlen($this->phone_number) !== 10)){
+
+        if (!empty($this->phone_number) && (substr($this->phone_number, 0, 1) !== '0')) {
             return false;
         }
         return true;
     }
+
 }
