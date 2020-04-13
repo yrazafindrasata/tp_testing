@@ -9,7 +9,7 @@ composer install
 php bin/console d:s:u --force
 ```
 
-#### Run test
+#### Run tests
 ```bash
 php bin/phpunit
 ```
